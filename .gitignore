@@ -1,0 +1,12 @@
+.vscode/
+build/
+modules/
+baserom/
+tools/*
+romfs/
+
+*.dol
+*.bin
+*.o
+
+testMakeUSA.bat
