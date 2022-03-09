@@ -1,10 +1,5 @@
 #include "matoGX.h"
 
-#include <egg/core/eggSystem.h>
-#include <egg/core/eggVideo.h>
-
-#include <nw4r/math/math_types.h>
-
 #include <GX/GXLight.h>
 #include <GX/GXVert.h>
 #include <GX/GXGeometry.h>
@@ -13,8 +8,12 @@
 #include <GX/GXTransform.h>
 #include <GX/GXBump.h>
 #include <GX/GXAttr.h>
-
 #include <math/mtx44.h>
+
+#include <nw4r/math/math_types.h>
+
+#include <egg/core/eggSystem.h>
+#include <egg/core/eggVideo.h>
 
 namespace mato
 {
