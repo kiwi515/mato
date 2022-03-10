@@ -1,6 +1,7 @@
 #include "matoInit.h"
 #include "matoAssert.h"
 #include "matoMemMgr.h"
+#include "mod_entrypoint.h"
 
 void MATOInitCPP();
 
@@ -8,6 +9,8 @@ void MATOInit()
 {
     mato::MemManager::Initialize();
     MATOInitCPP();
+
+    main();
 }
 kmBranch(0x80183b9c, &MATOInit);
 
