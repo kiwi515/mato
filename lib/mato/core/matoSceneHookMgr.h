@@ -28,9 +28,9 @@ namespace mato
             return instance;
         }
 
-        void SetHook(RPSysSceneCreator::ESceneID scene, const SceneHook *hook)
+        void SetHook(RPSysSceneCreator::ESceneID scene, const SceneHook& hook)
         {
-            if (hook != NULL) mSceneHooks[scene] = *hook;
+            mSceneHooks[scene] = hook;
         }
 
         static void ConfigureCallback();
