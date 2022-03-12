@@ -1,6 +1,6 @@
 #ifndef MATO_GFX_RENDERER_H
 #define MATO_GFX_RENDERER_H
-#include "types_mato.h"
+#include "matoAssert.h"
 
 #include <types_rp.h>
 

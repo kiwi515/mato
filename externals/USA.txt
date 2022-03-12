@@ -10,6 +10,7 @@
 #RPGrpRenderer
     Begin__13RPGrpRendererFv=0x801aff6c
     End__13RPGrpRendererFv=0x801afee0
+    sDrawPass__13RPGrpRenderer=0x804bdc0c
 #RPUtlRandom
     sSeed__11RPUtlRandom=0x804bf688
 #RPGolCollisionModel

@@ -10,6 +10,15 @@ public:
     static void End();
 
     void AppendDrawObject(IRPGrpDrawObject *);
+
+    IRPGrpDrawObject * GetDrawObjectList() const { return mDrawObjects; }
+    static void SetDrawPass(s32 pass) { sDrawPass = pass; }
+
+private:
+    char UNK_0x0[0xC];
+    IRPGrpDrawObject *mDrawObjects; // at 0xC
+
+    static s32 sDrawPass;
 };
 
 #endif

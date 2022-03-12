@@ -15,12 +15,14 @@ private:
 
 public:
     IRPGrpDrawObject() : mNext(NULL) {}
-    virtual ~IRPGrpDrawObject() {} // at 0x4
+    virtual ~IRPGrpDrawObject() {} // at 0x8
 
     //! @brief Any drawing the object needs to do
-    virtual void UserDraw() {} // at 0x8
+    virtual void UserDraw() {} // at 0xC
     //! @brief Debug draw pass, nearly all objects stub this out
-    virtual void DebugDraw() {} // at 0xC
+    virtual void DebugDraw() {} // at 0x10
+
+    IRPGrpDrawObject * GetNext() const { return mNext; }
 };
 
 #endif
