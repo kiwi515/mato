@@ -15,13 +15,23 @@ namespace EGG
         {
             IScnProc *mpThis; // at 0x0
             nw4r::g3d::ScnProc *mpScnProc; // at 0x4
-            u16 SHORT_0x8;
+            u16 mIndex; // at 0x8
             bool bUseOpa; // at 0xA
         };
 
         IScnProc();
+
+        // It seems DrawPathBase expects these virtual functions to be
+        // in the opposite order, from the order of its thunked function bodies.
+        // Additionally, MKW has IScnProc's virtual functions swapped like this.
+        // Is it possible they built DrawPathBase with an older version of EGG?
+        #ifdef ISCNPROC_ORDER_VF
+        virtual void doDraw(u16) = 0; // at 0x8
+        virtual ~IScnProc(); // at 0xC
+        #else
         virtual ~IScnProc(); // at 0x8
-        virtual UNKTYPE VIRT_0xC(UNKWORD) = 0; // at 0xC
+        virtual void doDraw(u16) = 0; // at 0xC
+        #endif
 
         void createScnProc(u16 procNum, MEMAllocator *allocator);
         void setPriorityScnProc(u16, u8, bool);

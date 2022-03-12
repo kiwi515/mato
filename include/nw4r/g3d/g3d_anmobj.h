@@ -2,6 +2,7 @@
 #define NW4R_G3D_ANMOBJ_H
 #include "types_nw4r.h"
 #include "g3d_rescommon.h"
+#include "g3d_resmdl.h"
 #include "g3d_obj.h"
 
 namespace nw4r
@@ -14,36 +15,36 @@ namespace nw4r
 
         struct FrameCtrl
         {
-            inline FrameCtrl(f32 f1, f32 f2, PlayPolicyFunc policy)
+            FrameCtrl(f32 f1, f32 f2, PlayPolicyFunc policy)
                 : mFrame(0.0f), mRate(1.0f), FLOAT_0x8(f1), FLOAT_0xC(f2) {}
             
-            inline f32 GetFrm() const
+            f32 GetFrm() const
             {
                 return mFrame;
             }
 
-            inline f32 GetRate() const
+            f32 GetRate() const
             {
                 return mRate;
             }
 
-            inline void SetFrm(f32 frm)
+            void SetFrm(f32 frm)
             {
                 f32 newFrm = mPolicy(FLOAT_0x8, FLOAT_0xC, frm);
                 mFrame = newFrm;
             }
 
-            inline void SetRate(f32 rate)
+            void SetRate(f32 rate)
             {
                 mRate = rate;
             }
 
-            inline void SetPolicy(PlayPolicyFunc func)
+            void SetPolicy(PlayPolicyFunc func)
             {
                 mPolicy = func;    
             }
 
-            inline void UpdateFrm()
+            void UpdateFrm()
             {
                 SetFrm(mFrame + mRate * smBaseUpdateRate);
             }
@@ -57,25 +58,51 @@ namespace nw4r
             static f32 smBaseUpdateRate;
         };
 
-        struct AnmObj : G3dObj
+        class AnmObj : G3dObj
         {
+        public:
             enum AnmFlag
             {
                 ANMFLAG_ISBOUND = 0x4
             };
 
-            inline AnmObj(MEMAllocator *pAllocator, G3dObj *pParent)
+        public:
+            AnmObj(MEMAllocator *pAllocator, G3dObj *pParent)
                 : G3dObj(pAllocator, pParent), mFlags(0) {}
 
-            virtual ~AnmObj();
-            
+            virtual bool IsDerivedFrom(TypeObj other) const // at 0x8
+            {
+                return (other == GetTypeObjStatic()) ? true
+                    : G3dObj::IsDerivedFrom(other);
+            }
+            virtual void G3dProc(u32, u32, void *) = 0; // at 0xC
+            virtual ~AnmObj() {} // at 0x10
+            virtual const TypeObj GetTypeObj() const // at 0x14
+            {
+                return TypeObj(TYPE_NAME);
+            }
+            virtual const char * GetTypeName() const // at 0x18
+            {
+                return GetTypeObj().GetTypeName();
+            }
+            virtual void SetFrame(f32) = 0; // at 0x1C
+            virtual f32 GetFrame() const = 0; // at 0x20
+            virtual void UpdateFrame() = 0; // at 0x24
+            virtual void SetUpdateRate(f32) = 0; // at 0x28
+            virtual f32 GetUpdateRate() const = 0; // at 0x2C
+            virtual bool Bind(ResMdl) = 0; // at 0x30
+            virtual void Release(); // at 0x34
+            virtual bool GetResult(u32) = 0; // at 0x38
+
+            static const TypeObj GetTypeObjStatic()
+            {
+                return TypeObj(TYPE_NAME);
+            }
+
             void SetAnmFlag(AnmFlag, bool);
             bool TestAnmFlag(AnmFlag) const;
-            virtual bool IsDerivedFrom(const TypeObj&) const;
-            virtual const TypeObj GetTypeObj() const;
-            static const TypeObj GetTypeObjStatic();
-            virtual const char * GetTypeName() const;
 
+        private:
             u32 mFlags; // at 0x0
 
             NW4R_G3D_TYPE_OBJ_DECL(AnmObj);

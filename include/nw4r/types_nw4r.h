@@ -46,6 +46,7 @@ namespace nw4r
 		struct VEC3;
 		struct MTX34;
 		struct AABB;
+		struct FRUSTUM;
 	}
 	
 	namespace snd
@@ -124,6 +125,8 @@ namespace nw4r
 		struct ScnLeaf;
 		struct ScnObj;
 		struct ScnGroup;
+		struct IScnObjGather;
+		struct IScnObjCallback;
 	}
 
 	namespace lyt
